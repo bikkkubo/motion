@@ -1,0 +1,34 @@
+{
+  "name": "motion-scheduler",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up --build",
+    "docker:prod": "docker-compose up --build",
+    "solver:dev": "cd solver && uvicorn main:app --reload --host 0.0.0.0 --port 8000",
+    "solver:install": "cd solver && pip install -r requirements.txt",
+    "clean": "rm -rf .next node_modules solver/__pycache__"
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.2.30",
+    "react-big-calendar": "^1.13.0",
+    "moment": "^2.30.1"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.30"
+  }
+}

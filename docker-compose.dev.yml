@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # Development Frontend (hot reload)
+  frontend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_SOLVER_API_URL=http://localhost:8000
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - solver-dev
+    networks:
+      - motion-network
+    command: npm run dev
+
+  # Development Solver (hot reload)
+  solver-dev:
+    build:
+      context: ./solver
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=development
+    volumes:
+      - ./solver:/app
+    networks:
+      - motion-network
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+networks:
+  motion-network:
+    driver: bridge
